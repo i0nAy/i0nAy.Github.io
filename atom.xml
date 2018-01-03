@@ -5,9 +5,9 @@
   <subtitle>我特么都不知道填啥子你知道?</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://www.i0nAy.com/"/>
   <updated>2018-01-02T00:54:01.254Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://www.i0nAy.com/</id>
   
   <author>
     <name>i0nAy</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2018/01/02/hello-world/"/>
-    <id>http://yoursite.com/2018/01/02/hello-world/</id>
+    <link href="https://www.i0nAy.com/2018/01/02/hello-world/"/>
+    <id>https://www.i0nAy.com/2018/01/02/hello-world/</id>
     <published>2018-01-02T00:54:01.254Z</published>
     <updated>2018-01-02T00:54:01.254Z</updated>
     
